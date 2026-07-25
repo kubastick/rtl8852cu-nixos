@@ -44,14 +44,20 @@ A non-flake `configuration.nix` can import the module straight from GitHub with
 `builtins.fetchTarball` - no need to copy any files:
 
 ```nix
+{ config, pkgs, ... }:
+
 let
   rtl8852cu-nixos = builtins.fetchTarball {
-    # TODO: Update hashes once published
-    url    = "https://github.com/kubastick/rtl8852cu-nixos/archive/<commit-or-tag>.tar.gz";
-    sha256 = "";
+    url    = "https://github.com/kubastick/rtl8852cu-nixos/archive/v0.1.0.tar.gz";
+    sha256 = "14kmrj33kxnpjwp2b92f8dsyqls429ik4h0f15v59l8f0i1n9npz";
   };
-in {
-  imports = [ "${rtl8852cu-nixos}/rtl8852cu.nix" ];
+in
+{
+  imports =
+    [ ./hardware-configuration.nix
+      "${rtl8852cu-nixos}/rtl8852cu.nix"
+    ];
+
   hardware.rtl8852cu.enable = true;
 }
 ```
