@@ -48,8 +48,8 @@ A non-flake `configuration.nix` can import the module straight from GitHub with
 
 let
   rtl8852cu-nixos = builtins.fetchTarball {
-    url    = "https://github.com/kubastick/rtl8852cu-nixos/archive/v0.1.0.tar.gz";
-    sha256 = "14kmrj33kxnpjwp2b92f8dsyqls429ik4h0f15v59l8f0i1n9npz";
+    url    = "https://github.com/kubastick/rtl8852cu-nixos/archive/v0.1.1.tar.gz";
+    sha256 = "04kr46h6skw0ig4nqf9l05660d3fnxxy41if2348qzpxjd4nf8ag";
   };
 in
 {
