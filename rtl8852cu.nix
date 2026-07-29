@@ -94,5 +94,16 @@ in
     # ...and load it (udev also auto-loads it on plug for any USB ID in the
     # driver's device table).
     boot.kernelModules = [ "8852cu" ];
+
+    # Many of these dongles power up in USB *storage* mode (0bda:1a2b),
+    # presenting a virtual "driver disk" instead of a Wi-Fi device - so the
+    # 8852cu driver has nothing to bind. This rule fires when that storage
+    # device appears and has usb_modeswitch eject it; the dongle then
+    # re-enumerates with its real Wi-Fi USB ID (e.g. 0db0:991d) and the driver
+    # binds it automatically. Harmless for dongles that never enter disk mode:
+    # the rule simply never matches.
+    services.udev.extraRules = ''
+      ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="${pkgs.usb-modeswitch}/bin/usb_modeswitch -v 0bda -p 1a2b -K"
+    '';
   };
 }
